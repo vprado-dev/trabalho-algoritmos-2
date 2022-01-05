@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "ctype.h": "c",
+    "stdlib.h": "c",
+    "stdio.h": "c",
+    "functions.h": "c"
+  },
+  "C_Cpp.errorSquiggles": "Disabled",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false
+}
