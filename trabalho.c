@@ -5,6 +5,10 @@
 #include<windows.h>
 #include<wincon.h>
 
-void main(){
-  
+#include"util/util.h"
+
+int main(){
+  inicializacao();
+
+  return 0;
 }
