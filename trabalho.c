@@ -8,7 +8,9 @@
 #include"util/util.h"
 
 int main(){
-  inicializacao();
+  setlocale(LC_ALL, "pt_br");
+
+  SetConsoleTitle("Trabalho 2 - Eduardo Pires & Vinicius Prado");
 
   return 0;
 }
