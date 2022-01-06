@@ -3,5 +3,6 @@
 
 void inicializacao();
 void cursor(int status);
+void gotoxy(int x, int y);
 
 #endif
