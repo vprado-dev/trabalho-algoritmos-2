@@ -26,7 +26,7 @@ void menuInicial();
 void leProduto(Produto* p);
 void inserirProduto(Produto p);
 void incluiProduto();
-void criaArquivo(char* nomeArq, FILE** file);
+void setupArquivo(char* nomeArq, FILE** file);
 void listaProdutos();
 void exibeProduto(Produto p);
 void alteraProduto();
@@ -39,7 +39,7 @@ void pesquisaProdutoPreco(double preco);
 
 int main() {
   //Chamar depois que ja tiver alterado a variavel fileName
-  criaArquivo(fileName, &fp);
+  setupArquivo(fileName, &fp);
 
   while (1) {
     // Insere produto
@@ -53,7 +53,7 @@ int main() {
 
     // Exclui Produto
     excluiProduto();
-    criaArquivo(fileName, &fp);//Tem que chamar essa funcao depois da exclusao
+    setupArquivo(fileName, &fp);//Tem que chamar essa funcao depois da exclusao
 
     pesquisaProduto();
   }
@@ -144,7 +144,7 @@ void incluiProduto() {
   inserirProduto(prod);
 }
 
-void criaArquivo(char* nomeArq, FILE** file) {
+void setupArquivo(char* nomeArq, FILE** file) {
   *file = fopen(nomeArq, "r+b");
   if (*file == NULL) {
     *file = fopen(nomeArq, "w+b");
@@ -225,7 +225,7 @@ void exclusaoFisicaProduto(char* nome) {
   rewind(fp);
 
   // Cria arquivo temporario
-  criaArquivo("prod_tmp.bin", &fp_tmp);
+  setupArquivo("prod_tmp.bin", &fp_tmp);
 
   //Percorre o arquivo procurando nome
   while (fread(&p, sizeof(Produto), 1, fp) != 0) {
