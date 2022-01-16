@@ -35,10 +35,13 @@ void menuInicialConfiguracao(dateTime *dataHora){
     char titulo[] = "Configurações";
     criaCabecalho(titulo);
 
-    gotoxy(5, 10); printf("Gerenciar diretórios");
-    gotoxy(5, 11); printf("Alterar Data e Hora");
-    gotoxy(5, 12); printf("Resetar Data e Hora");
-    gotoxy(5, 13); printf("Voltar");
+    gotoxy(5, 10); printf("Listar arquivos");
+    gotoxy(5, 11); printf("Renomear um arquivo");
+    gotoxy(5, 12); printf("Deletar arquivos");
+    gotoxy(5, 13); printf("Definir arquivo do CRUD");
+    gotoxy(5, 14); printf("Alterar Data e Hora");
+    gotoxy(5, 15); printf("Resetar Data e Hora");
+    gotoxy(5, 16); printf("Voltar");
 
     if (flagAjuda){
       // implementar alguma coisa
@@ -53,11 +56,11 @@ void menuInicialConfiguracao(dateTime *dataHora){
     switch (input){
       case 72: // seta para cima
         pos -= 1;
-        if(pos < 10) pos = 13;
+        if(pos < 10) pos = 16;
         break;
       case 80: // seta para baixo
         pos += 1;
-        if(pos > 13) pos = 10;
+        if(pos > 16) pos = 10;
         break;
       case 13: // enter
         if(pos == 10){ // gerenciar diretórios
