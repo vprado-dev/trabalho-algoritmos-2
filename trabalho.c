@@ -5,23 +5,17 @@
 #include <windows.h>
 #include <wincon.h>
 
-#include "arquivos.h"
+#include "views/arquivos.h"
 #include "util/util.h"
 #include "functions/fncrud.h"
 
-FILE* fp; //produtos
-
-char fileName[50] = "produtos.bin";
-
-///////////////////////////////////////////////////////////////// VARIÁVEIS
-
 dateTime dataHora; // datetime definido pelo usuário
 
-///////////////////////////////////////////////////////////////// CABEÇALHOS
+FILE* fp; //produtos
+char fileName[50] = "produtos.bin";
 
 void menuInicial();
 void iniciaData();
-
 
 int main() {
   // //Chamar depois que ja tiver alterado a variavel fileName
@@ -120,9 +114,6 @@ void menuInicial() {
 
   } while (continuaExecucao);
 }
-
-
-
 
 void iniciaData() {
   dataHora.minuto = 0;
