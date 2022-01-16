@@ -33,6 +33,9 @@ void alteraProduto();
 void excluiProduto();
 void exclusaoFisicaProduto(char* nome);
 void exclusaoLogicaProduto(char* nome);
+void pesquisaProduto();
+void pesquisaProdutoNome(char* nomeProd);
+void pesquisaProdutoPreco(double preco);
 
 int main() {
   //Chamar depois que ja tiver alterado a variavel fileName
@@ -40,19 +43,19 @@ int main() {
 
   while (1) {
     // Insere produto
-    listaProdutos();
+    incluiProduto();
 
     // Lista produtos - TODOS
-    // incluiProduto();
+    listaProdutos();
 
-    // listaProdutos();
-    // //Altera produto
-
+    //Altera produto
     alteraProduto();
 
     // Exclui Produto
-    // excluiProduto();
-    // criaArquivo(fileName, &fp);
+    excluiProduto();
+    criaArquivo(fileName, &fp);//Tem que chamar essa funcao depois da exclusao
+
+    pesquisaProduto();
   }
   return 0;
 
@@ -154,7 +157,7 @@ void criaArquivo(char* nomeArq, FILE** file) {
 }
 
 void exibeProduto(Produto p) {
-  printf("Cod. de Barras: %s // Nome: %s // Qtd.: %d // Preco: %.2f reais // Excluido: %d \n", p.codigo_barras, p.nome, p.quantidade, p.preco, p.excluido);
+  printf("Cod. de Barras: %s // Nome: %s // Qtd.: %d // Preco: %.2f reais\n", p.codigo_barras, p.nome, p.quantidade, p.preco);
 }
 
 void listaProdutos() {
@@ -164,7 +167,7 @@ void listaProdutos() {
 
   while (1) {
     if (fread(&reg, sizeof(reg), 1, fp) != 1)break;
-    if (reg.excluido == true) continue;
+    if (reg.excluido == 1) continue;
     exibeProduto(reg);
     n_Linhas++;
     if (n_Linhas % 20 == 0) {
@@ -291,5 +294,50 @@ void exclusaoLogicaProduto(char* nome) {
   if (!found) {
     mensagemPausa("Produto nao encontrado.\n");
   }
+}
 
+void pesquisaProduto() {
+  int op = 0;
+  printf("Pelo que deseja pesquisar?\n1 - Nome\n2 - Preco\n");
+  scanf("%d", &op);fflush(stdin);
+
+  if (op != 1 && op != 2) {
+    return;
+  } else if (op == 1) {
+    char nomeProd[50];
+    printf("Qual o nome do produto a procurar: ");
+    gets(nomeProd); fflush(stdin);
+
+    pesquisaProdutoNome(nomeProd);
+  } else if (op == 2) {
+    double preco;
+    printf("Qual o preco do produto a procurar: ");
+    scanf("%lf", &preco); fflush(stdin);
+    pesquisaProdutoPreco(preco);
+  }
+}
+
+void pesquisaProdutoNome(char* nomeProd) {
+  Produto p;
+  rewind(fp);
+  while (fread(&p, sizeof(Produto), 1, fp) != 0) {
+    if (p.excluido != true && strcmp(nomeProd, p.nome) == 0) {
+      exibeProduto(p);
+    }
+  }
+
+  mensagemPausa("\n\n Pressione <Enter> para continuar .  .  .");
+}
+
+void pesquisaProdutoPreco(double preco) {
+  Produto p;
+  rewind(fp);
+
+  while (fread(&p, sizeof(Produto), 1, fp)) {
+    if (p.excluido != true && p.preco == preco) {
+      exibeProduto(p);
+    }
+  }
+
+  mensagemPausa("\n\n Pressione <Enter> para continuar .  .  .");
 }
