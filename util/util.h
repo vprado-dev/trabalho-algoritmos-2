@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////// TIPOS
 
-struct dateTime{
+struct dateTime {
   int minuto;
   int hora;
   int dia;
@@ -18,6 +18,7 @@ typedef struct dateTime dateTime;
 void inicializacao();
 void cursor(int status);
 void gotoxy(int x, int y);
-void criaCabecalho(char []);
+void mensagemPausa(char* msg);
+void criaCabecalho(char[]);
 
 #endif
