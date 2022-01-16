@@ -44,7 +44,7 @@ void menuInicial() {
     gotoxy(5, 5); printf("PRODUCT MANAGER");
     gotoxy(5, 6); printf("Escolha uma das opções!");
 
-    gotoxy(5, 10); printf("Gerenciamento de arquivos");
+    gotoxy(5, 10); printf("Gerenciamento de produtos");
     gotoxy(5, 11); printf("Configurações");
     gotoxy(5, 12); printf("Sair");
 
