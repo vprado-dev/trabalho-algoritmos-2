@@ -20,7 +20,7 @@ void inicializacao(){
 
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", tm.tm_hour, tm.tm_min, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+    gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", tm.tm_hour, tm.tm_min, tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 }
 
 // 1 => exibe o cursor
