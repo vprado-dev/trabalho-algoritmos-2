@@ -7,9 +7,15 @@
 
 #include"util/util.h"
 
-char[] nomeArquivo; // usar esse arquivo para o CRUD
+///////////////////////////////////////////////////////////////// VARIÁVEIS
+
+// char[] nomeArquivo; // usar esse arquivo para o CRUD
+
+///////////////////////////////////////////////////////////////// CABEÇALHOS
 
 void menuInicial();
+
+///////////////////////////////////////////////////////////////// FUNÇÕES
 
 int main() {
   setlocale(LC_ALL, "pt_br");
@@ -20,8 +26,6 @@ int main() {
 
   return 0;
 }
-
-/////////////////////////////////////////////////////////////////
 
 void menuInicial() {
   cursor(0); // esconde o cursor
@@ -40,7 +44,7 @@ void menuInicial() {
     gotoxy(5, 6); printf("Escolha uma das opções!");
 
     gotoxy(5, 10); printf("Gerenciamento de arquivos");
-    gotoxy(5, 11); printf("Gerenciamento de produtos");
+    gotoxy(5, 11); printf("Configurações");
     gotoxy(5, 12); printf("Sair");
 
     if (flagAjuda) {
