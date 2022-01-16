@@ -4,7 +4,9 @@
     "stdlib.h": "c",
     "stdio.h": "c",
     "functions.h": "c",
-    "util.h": "c"
+    "util.h": "c",
+    "stdbool.h": "c",
+    "windows.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled",
   "editor.tabSize": 2,

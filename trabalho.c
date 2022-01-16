@@ -1,13 +1,14 @@
-#include<conio.h>
-#include<locale.h>
-#include<stdbool.h>
-#include<stdio.h>
-#include<windows.h>
-#include<wincon.h>
+#include <conio.h>
+#include <locale.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <windows.h>
+#include <wincon.h>
 
-#include"util/util.h"
+#include "util/util.h"
 
 FILE* fp; //produtos
+FILE* fp_tmp; //file temporario para exclusao fisica
 
 typedef struct {
   char codigo_barras[100];
@@ -25,24 +26,32 @@ void menuInicial();
 void leProduto(Produto* p);
 void inserirProduto(Produto p);
 void incluiProduto();
-void criaArquivo();
+void criaArquivo(char* nomeArq, FILE** file);
 void listaProdutos();
 void exibeProduto(Produto p);
 void alteraProduto();
+void excluiProduto();
+void exclusaoFisicaProduto(char* nome);
+void exclusaoLogicaProduto(char* nome);
 
 int main() {
   //Chamar depois que ja tiver alterado a variavel fileName
-  criaArquivo();
+  criaArquivo(fileName, &fp);
 
-  // Insere produto
-  incluiProduto();
+  while (1) {
+    // Insere produto
+    listaProdutos();
 
-  // Lista produtos - TODOS
-  listaProdutos();
+    // Lista produtos - TODOS
+    incluiProduto();
+    listaProdutos();
+    // //Altera produto
+    alteraProduto();
 
-  //Altera produto
-  alteraProduto();
-
+    // Exclui Produto
+    excluiProduto();
+    criaArquivo(fileName, &fp);
+  }
   return 0;
 
   setlocale(LC_ALL, "pt_br");
@@ -130,11 +139,11 @@ void incluiProduto() {
   inserirProduto(prod);
 }
 
-void criaArquivo() {
-  fp = fopen(fileName, "r+b");
-  if (fp == NULL) {
-    fp = fopen(fileName, "w+b");
-    if (fp == NULL) {
+void criaArquivo(char* nomeArq, FILE** file) {
+  *file = fopen(nomeArq, "r+b");
+  if (*file == NULL) {
+    *file = fopen(nomeArq, "w+b");
+    if (*file == NULL) {
       fprintf(stderr, " Erro fatal: impossível criar arquivo de dados\n");
       getchar();
       exit(1);
@@ -143,7 +152,7 @@ void criaArquivo() {
 }
 
 void exibeProduto(Produto p) {
-  printf("Cod. de Barras: %s // Nome: %s // Qtd.: %d // Preco: %.2f reais \n", p.codigo_barras, p.nome, p.quantidade, p.preco);
+  printf("Cod. de Barras: %s // Nome: %s // Qtd.: %d // Preco: %.2f reais // Excluido: %d \n", p.codigo_barras, p.nome, p.quantidade, p.preco, p.excluido);
 }
 
 void listaProdutos() {
@@ -194,4 +203,85 @@ void alteraProduto() {
 
   fwrite(&p, sizeof(Produto), 1, fp);
   fflush(fp);
+}
+
+void excluiProduto() {
+  char produtoPesquisa[50];
+  char resp;
+
+  printf("Qual o nome do produto: ");
+  gets(produtoPesquisa); fflush(stdin);
+
+  printf("\n\nExclusao Fisica (s/n)?: "); resp = getchar();
+  fflush(stdin);
+
+  if (toupper(resp) != 'S') {
+    exclusaoLogicaProduto(produtoPesquisa);
+  } else {
+    exclusaoFisicaProduto(produtoPesquisa);
+  }
+
+}
+
+void exclusaoFisicaProduto(char* nome) {
+  Produto p;
+  int found = 0;
+
+  rewind(fp);
+
+  // Cria arquivo temporario
+  criaArquivo("prod_tmp.bin", &fp_tmp);
+
+  //Percorre o arquivo procurando nome
+  while (fread(&p, sizeof(Produto), 1, fp) != 0) {
+    if (strcmp(nome, p.nome) == 0) {
+      //Encontrou o registro
+      found = 1;
+      printf("\n\nDados atuais:\n\n");
+      exibeProduto(p);
+
+      mensagemPausa("Produto encontrado e deletado.\n");
+    } else {
+      fwrite(&p, sizeof(Produto), 1, fp_tmp);
+    }
+  }
+
+  if (!found) {
+    mensagemPausa("Produto nao encontrado.\n");
+  }
+
+  fclose(fp);
+  fclose(fp_tmp);
+
+  remove(fileName);
+  rename("prod_tmp.bin", fileName);
+}
+
+void exclusaoLogicaProduto(char* nome) {
+  Produto p;
+  int found = 0;
+
+  rewind(fp);
+
+  //Percorre o arquivo procurando nome
+  while (fread(&p, sizeof(Produto), 1, fp) != 0) {
+    if (strcmp(nome, p.nome) == 0) {
+      //Encontrou o registro
+      found = 1;
+      printf("\n\nDados atuais:\n\n");
+      exibeProduto(p);
+
+      p.excluido = true;
+
+      fseek(fp, -(long)sizeof(Produto), SEEK_CUR);
+      fwrite(&p, sizeof(Produto), 1, fp);
+      fflush(fp);
+      mensagemPausa("Produto encontrado e deletado.\n");
+    }
+  }
+
+  if (!found) {
+    mensagemPausa("Produto nao encontrado.\n");
+  }
+
 }
