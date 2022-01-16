@@ -6,6 +6,7 @@
 #include<wincon.h>
 
 #include"util/util.h"
+#include"arquivos.h"
 
 ///////////////////////////////////////////////////////////////// VARIÁVEIS
 
@@ -70,7 +71,10 @@ void menuInicial() {
         if(pos > 12) pos = 10;
         break;
       case 13: // enter
-        if(pos == 12){
+        if(pos == 11){ // configurações
+          menuInicialConfiguracao();
+        }
+        if(pos == 12){ // sair
           continuaExecucao = 0;
           system("cls");
         }

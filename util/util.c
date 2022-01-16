@@ -2,9 +2,9 @@
 #include<locale.h>
 #include<stdbool.h>
 #include<stdio.h>
+#include<time.h>
 #include<windows.h>
 #include<wincon.h>
-#include<time.h>
 
 ///////////////////////////////////////////////////////////////// CABEÇALHOS
 
