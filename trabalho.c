@@ -7,6 +7,8 @@
 
 #include"util/util.h"
 
+char[] nomeArquivo; // usar esse arquivo para o CRUD
+
 void menuInicial();
 
 int main() {
