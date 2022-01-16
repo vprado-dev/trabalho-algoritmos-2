@@ -49,10 +49,14 @@ void menuInicial() {
     gotoxy(5, 12); printf("Sair");
 
     if (flagAjuda) {
-      gotoxy(55, 16); printf("[Gerenciamento de arquivos]");
-      gotoxy(65, 17); printf("Permite a manipulação dos arquivos do CRUD!");
-      gotoxy(55, 19); printf("[Gerenciamento de produtos]");
-      gotoxy(65, 20); printf("Permite a manipulação dos produtos do CRUD!");
+      gotoxy(45, 16); printf("[Gerenciamento de produtos]");
+      gotoxy(55, 17); printf("Permite a manipulação dos produtos cadastrados");
+      gotoxy(70, 18); printf("e o cadastro de novos produtos!");
+      gotoxy(45, 20); printf("[Configurações]");
+      gotoxy(55, 21); printf("Alteração de informações do sistema");
+      gotoxy(70, 22); printf("e gerenciamento de arquivos.");
+      gotoxy(45, 24); printf("[Sair]");
+      gotoxy(55, 25); printf("Encerra o sistema");
     }
 
     gotoxy(3, pos); printf(">"); // coloca a seta na posição
