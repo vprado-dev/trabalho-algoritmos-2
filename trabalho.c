@@ -34,16 +34,18 @@ void menuInicial() {
     gotoxy(5, 3); printf("[ESC] Sair");
     gotoxy(20, 3); printf("[F1] Ajuda");
 
-    gotoxy(5, 5); printf("SOCCER PLAYER MANAGER");
+    gotoxy(5, 5); printf("PRODUCT MANAGER");
     gotoxy(5, 6); printf("Escolha uma das opções!");
 
     gotoxy(5, 10); printf("Gerenciamento de arquivos");
-    gotoxy(5, 11); printf("Gerenciamento de jogadores");
+    gotoxy(5, 11); printf("Gerenciamento de produtos");
     gotoxy(5, 12); printf("Sair");
 
     if (flagAjuda) {
-      gotoxy(60, 16);
-      printf("Escolha uma opção!!");
+      gotoxy(55, 16); printf("[Gerenciamento de arquivos]");
+      gotoxy(65, 17); printf("Permite a manipulação dos arquivos do CRUD!");
+      gotoxy(55, 19); printf("[Gerenciamento de produtos]");
+      gotoxy(65, 20); printf("Permite a manipulação dos produtos do CRUD!");
     }
 
     gotoxy(3, pos); printf(">"); // coloca a seta na posição
