@@ -6,36 +6,17 @@
 #include <wincon.h>
 
 #include "views/arquivos.h"
+#include "views/crud.h"
 #include "util/util.h"
-#include "functions/fncrud.h"
 
 dateTime dataHora; // datetime definido pelo usuário
 
-FILE* fp; //produtos
-char fileName[50] = "produtos.bin";
+char fileName[50] = "files/produtos.bin";
 
 void menuInicial();
 void iniciaData();
 
 int main() {
-  // //Chamar depois que ja tiver alterado a variavel fileName
-  // setupArquivo(fileName, &fp);
-
-  // // Insere produto
-  // incluiProduto();
-
-  // // Lista produtos - TODOS
-  // listaProdutos();
-
-  // //Altera produto
-  // alteraProduto();
-
-  // // Exclui Produto
-  // excluiProduto(fileName);
-  // setupArquivo(fileName, &fp);//Tem que chamar essa funcao depois da exclusao
-
-  // pesquisaProduto();
-
   setlocale(LC_ALL, "pt_br");
 
   SetConsoleTitle("Trabalho 2 - Eduardo Pires & Vinicius Prado");
@@ -94,6 +75,9 @@ void menuInicial() {
       if (pos > 12) pos = 10;
       break;
     case 13: // enter
+      if(pos == 10){
+        menuInicialCrud(dataHora, fileName);
+      }
       if (pos == 11) { // configurações
         menuInicialConfiguracao(&dataHora);
       }
