@@ -7,7 +7,8 @@
     "util.h": "c",
     "stdbool.h": "c",
     "windows.h": "c",
-    "wincon.h": "c"
+    "wincon.h": "c",
+    "arquivos.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled",
   "editor.tabSize": 2,
