@@ -43,14 +43,16 @@ int main() {
     listaProdutos();
 
     // Lista produtos - TODOS
-    incluiProduto();
-    listaProdutos();
+    // incluiProduto();
+
+    // listaProdutos();
     // //Altera produto
+
     alteraProduto();
 
     // Exclui Produto
-    excluiProduto();
-    criaArquivo(fileName, &fp);
+    // excluiProduto();
+    // criaArquivo(fileName, &fp);
   }
   return 0;
 
@@ -174,35 +176,25 @@ void listaProdutos() {
 
 void alteraProduto() {
   Produto p;
-  long int n_reg;
+  char nomeProduto[50];
+  printf("Qual o nome do produto: ");
+  gets(nomeProduto); fflush(stdin);
 
-  printf("Qual o numero do registro: ");
-  scanf("%ld", &n_reg); fflush(stdin);
+  rewind(fp);
 
-  if (fseek(fp, (n_reg - 1) * sizeof(Produto), SEEK_SET) != 0) {
-    mensagemPausa("Registro inexistente ou problemas no posicionamento!!!");
-    return;
+  while (fread(&p, sizeof(Produto), 1, fp) != 0) {
+    if (strcmp(nomeProduto, p.nome) == 0) {
+      printf("\n\n Dados Atuais:\n\n");
+      exibeProduto(p);
+      printf("\n\n Novos dados \n\n");
+      leProduto(&p);
+
+      fseek(fp, -(long)sizeof(Produto), SEEK_CUR);
+      fwrite(&p, sizeof(Produto), 1, fp);
+      fflush(fp);
+    }
   }
 
-  if (fread(&p, sizeof(Produto), 1, fp) != 1) {
-    mensagemPausa("Problemas na leitura do registro!!!");
-    return;
-  }
-
-  if (p.excluido == true) {
-    mensagemPausa("Um registro apagado não pode ser alterado!!! \n\n");
-    return;
-  }
-
-  printf("\n\n Dados Atuais:\n\n");
-  exibeProduto(p);
-  printf("\n\n Novos dados \n\n");
-  leProduto(&p);
-
-  fseek(fp, -(long)sizeof(Produto), SEEK_CUR);
-
-  fwrite(&p, sizeof(Produto), 1, fp);
-  fflush(fp);
 }
 
 void excluiProduto() {
@@ -240,6 +232,14 @@ void exclusaoFisicaProduto(char* nome) {
       printf("\n\nDados atuais:\n\n");
       exibeProduto(p);
 
+      char resp;
+      printf("\n\nConfirma Exclusao (s/n)?: "); resp = getchar();
+      fflush(stdin);
+
+      if (toupper(resp) != 'S') {
+        return;
+      }
+
       mensagemPausa("Produto encontrado e deletado.\n");
     } else {
       fwrite(&p, sizeof(Produto), 1, fp_tmp);
@@ -270,6 +270,14 @@ void exclusaoLogicaProduto(char* nome) {
       found = 1;
       printf("\n\nDados atuais:\n\n");
       exibeProduto(p);
+
+      char resp;
+      printf("\n\nConfirma Exclusao (s/n)?: "); resp = getchar();
+      fflush(stdin);
+
+      if (toupper(resp) != 'S') {
+        return;
+      }
 
       p.excluido = true;
 
