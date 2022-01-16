@@ -3,7 +3,8 @@
     "ctype.h": "c",
     "stdlib.h": "c",
     "stdio.h": "c",
-    "functions.h": "c"
+    "functions.h": "c",
+    "util.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled",
   "editor.tabSize": 2,

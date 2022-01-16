@@ -4,5 +4,5 @@
 void inicializacao();
 void cursor(int status);
 void gotoxy(int x, int y);
-
+void mensagemPausa(char* msg);
 #endif

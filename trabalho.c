@@ -7,16 +7,44 @@
 
 #include"util/util.h"
 
+FILE* fp; //produtos
+
+typedef struct {
+  char codigo_barras[100];
+  char nome[50];
+  int quantidade;
+  double preco;
+  bool excluido;
+}Produto;
+
+char fileName[50] = "produtos.bin";
+
+
+// Declaracoes de Funcoes
 void menuInicial();
+void leProduto(Produto* p);
+void inserirProduto(Produto p);
+void incluiProduto();
+void criaArquivo();
+void listaProdutos();
 
 int main() {
+  //Chamar depois que ja tiver alterado a variavel fileName
+  criaArquivo();
+
+  // Insere produto
+  incluiProduto();
+
+  // Lista produtos - TODOS
+  listaProdutos();
+
+  return 0;
+
   setlocale(LC_ALL, "pt_br");
 
   SetConsoleTitle("Trabalho 2 - Eduardo Pires & Vinicius Prado");
 
   menuInicial();
-
-  return 0;
 }
 
 /////////////////////////////////////////////////////////////////
@@ -52,24 +80,79 @@ void menuInicial() {
       printf("Escolha uma opção!!");
     }
 
-    switch (input){
-      case 72: // seta para cima
-        pos -= 1;
-        if(pos < 10) pos = 12;
-        break;
-      case 80: // seta para baixo
-        pos += 1;
-        if(pos > 12) pos = 10;
-        break;
-      case 13: // enter
-        // chamar as devidas funções
-        break;
-      case ';':
-        flagAjuda = true;
-        break;
-      default: break;
+    switch (input) {
+    case 72: // seta para cima
+      pos -= 1;
+      if (pos < 10) pos = 12;
+      break;
+    case 80: // seta para baixo
+      pos += 1;
+      if (pos > 12) pos = 10;
+      break;
+    case 13: // enter
+      // chamar as devidas funções
+      break;
+    case ';':
+      flagAjuda = true;
+      break;
+    default: break;
     }
 
   } while (continuaExecucao);
 
+}
+
+void leProduto(Produto* p) {
+  printf("Codigo de barras: ");gets(p->codigo_barras);
+  printf("Nome: ");gets(p->nome);
+  printf("Quantidade: ");scanf("%d", &p->quantidade);
+  printf("Preco: "); scanf("%lf", &p->preco);
+  p->excluido = false;
+  fflush(stdin);
+}
+
+void inserirProduto(Produto p) {
+  fseek(fp, 0L, SEEK_END);
+  if (fwrite(&p, sizeof(p), 1, fp) != 1) {
+    printf("Inserir produto: Falhou a escrita do registro\n");
+    system("pause");
+  }
+}
+
+void incluiProduto() {
+  Produto prod;
+  leProduto(&prod);
+  inserirProduto(prod);
+}
+
+void criaArquivo() {
+  fp = fopen(fileName, "r+b");
+  if (fp == NULL) {
+    fp = fopen(fileName, "w+b");
+    if (fp == NULL) {
+      fprintf(stderr, " Erro fatal: impossível criar arquivo de dados\n");
+      getchar();
+      exit(1);
+    }
+  }
+}
+
+void exibeProduto(Produto p) {
+  printf("Cod. de Barras: %s // Nome: %s // Qtd.: %d // Preco: %.2f reais \n", p.codigo_barras, p.nome, p.quantidade, p.preco);
+}
+
+void listaProdutos() {
+  long int n_Linhas = 0;
+  Produto reg;
+  rewind(fp);
+  while (1) {
+    if (fread(&reg, sizeof(reg), 1, fp) != 1)break;
+    if (reg.excluido == true) continue;
+    exibeProduto(reg);
+    n_Linhas++;
+    if (n_Linhas % 20 == 0) {
+      mensagemPausa("Pressione <Enter> para continuar .  .  .");
+    }
+  }
+  mensagemPausa("\n\nPressione <Enter> para continuar .  .  .");
 }
