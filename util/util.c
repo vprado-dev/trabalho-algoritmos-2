@@ -1,11 +1,11 @@
-#include<conio.h>
-#include<locale.h>
-#include<stdbool.h>
-#include<stdio.h>
-#include<string.h>
-#include<time.h>
-#include<windows.h>
-#include<wincon.h>
+#include <conio.h>
+#include <locale.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <windows.h>
+#include <wincon.h>
 
 ///////////////////////////////////////////////////////////////// TIPOS
 

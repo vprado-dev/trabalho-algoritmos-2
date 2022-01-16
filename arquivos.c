@@ -1,14 +1,23 @@
-#include<conio.h>
-#include<stdbool.h>
-#include<stdio.h>
-#include<windows.h>
+#include <conio.h>
+#include <dirent.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <windows.h>
 
 #include"util/util.h"
+
+///////////////////////////////////////////////////////////////// CONSTANTES
+
+const char *name = "files";
 
 ///////////////////////////////////////////////////////////////// CABEÇALHO
 
 void alteraDataHora(dateTime *dataHora);
 void resetaDataHora(dateTime *dataHora);
+void listaArquivos(dateTime *dataHora);
+bool verificaFiles();
 
 ///////////////////////////////////////////////////////////////// FUNÇÕES
 
@@ -51,6 +60,9 @@ void menuInicialConfiguracao(dateTime *dataHora){
         if(pos > 13) pos = 10;
         break;
       case 13: // enter
+        if(pos == 10){ // gerenciar diretórios
+          listaArquivos(&dataHoraLocal);
+        }
         if(pos == 11){ // alterar data e hora
           alteraDataHora(&dataHoraLocal);
         }
@@ -96,3 +108,64 @@ void resetaDataHora(dateTime *dataHora){
   (*dataHora).mes = 0;
   (*dataHora).ano = 0;
 }
+
+void listaArquivos(dateTime *dataHora){
+  if(!verificaFiles())
+    system("mkdir files");
+
+  struct dirent *de;
+  DIR *dr = opendir("./files");
+
+  // verificando se não houve nenhum erro
+  if (dr == NULL) 
+  {
+      printf("Houve um erro no programa!");
+      return;
+  }
+
+  // verificando se existem arquivos na pasta
+
+  bool possuiArquivos = false;
+
+  while ((de = readdir(dr)) != NULL){
+    if(strcmp(de->d_name, ".") != 0 && strcmp(de->d_name, "..")){
+      possuiArquivos = true;
+      break;
+    }
+  }
+
+  if(!possuiArquivos){
+    gotoxy(50, 10); printf("Não existem arquivos válidos a serem exibidos!");
+    gotoxy(50, 11); printf("Pressione qualquer tecla para continuar...");
+    system("pause >nul");
+    return;
+  }
+
+  // listando os arquivos
+
+  int linhas = 10;
+  while((de = readdir(dr)) != NULL){
+    gotoxy(50, linhas); printf("%s\n", de->d_name);
+    linhas += 1;
+  }
+
+  closedir(dr); 
+  gotoxy(50, linhas + 1); printf("Pressione qualquer tecla para continuar...");
+  system("pause >nul");
+
+  return;
+}
+
+bool verificaFiles(){
+  struct dirent *de;
+  DIR *dr = opendir(".");
+
+  while ((de = readdir(dr)) != NULL){
+    if(strcmp(de->d_name, "files") == 0){
+      return true;
+    }
+  }
+
+  return false;
+}
+
