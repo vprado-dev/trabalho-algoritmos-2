@@ -28,7 +28,7 @@ void incluiProduto();
 void criaArquivo();
 void listaProdutos();
 void exibeProduto(Produto p);
-void alterarProduto();
+void alteraProduto();
 
 int main() {
   //Chamar depois que ja tiver alterado a variavel fileName
@@ -41,7 +41,7 @@ int main() {
   listaProdutos();
 
   //Altera produto
-  alterarProduto();
+  alteraProduto();
 
   return 0;
 
@@ -163,7 +163,7 @@ void listaProdutos() {
   mensagemPausa("\n\nPressione <Enter> para continuar .  .  .");
 }
 
-void alterarProduto() {
+void alteraProduto() {
   Produto p;
   long int n_reg;
 
