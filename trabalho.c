@@ -52,9 +52,11 @@ void menuInicial() {
       gotoxy(45, 16); printf("[Gerenciamento de produtos]");
       gotoxy(55, 17); printf("Permite a manipulação dos produtos cadastrados");
       gotoxy(70, 18); printf("e o cadastro de novos produtos!");
+
       gotoxy(45, 20); printf("[Configurações]");
       gotoxy(55, 21); printf("Alteração de informações do sistema");
       gotoxy(70, 22); printf("e gerenciamento de arquivos.");
+      
       gotoxy(45, 24); printf("[Sair]");
       gotoxy(55, 25); printf("Encerra o sistema");
     }

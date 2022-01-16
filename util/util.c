@@ -34,11 +34,15 @@ void inicializacao(dateTime dataHora){
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
-    if(dataHora.ano == 0){
+    if(dataHora.minuto == 0 &&
+      dataHora.hora == 0 &&
+      dataHora.dia == 0 &&
+      dataHora.mes == 0 &&
+      dataHora.ano == 0){
       gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", tm.tm_hour, tm.tm_min, tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     }
     else{
-      gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", dataHora.hora, dataHora.minuto, dataHora.dia, dataHora.mes, dataHora.ano);
+      gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", dataHora.minuto, dataHora.hora, dataHora.dia, dataHora.mes, dataHora.ano);
     }
 }
 
