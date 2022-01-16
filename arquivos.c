@@ -7,7 +7,7 @@
 
 ///////////////////////////////////////////////////////////////// FUNÇÕES
 
-void menuInicialConfiguracao(){
+void menuInicialConfiguracao(dateTime *dataHora){
   cursor(0); // esconde o cursor
 
   int pos = 10;
@@ -15,7 +15,7 @@ void menuInicialConfiguracao(){
   bool flagAjuda = false, continuaExecucao = true;
 
   do{
-    inicializacao();
+    inicializacao((*dataHora));
 
     gotoxy(5, 3); printf("[ESC] Voltar");
     gotoxy(20, 3); printf("[F1] Ajuda");

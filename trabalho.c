@@ -10,11 +10,12 @@
 
 ///////////////////////////////////////////////////////////////// VARIÁVEIS
 
-// char[] nomeArquivo; // usar esse arquivo para o CRUD
+dateTime dataHora; // datetime definido pelo usuário
 
 ///////////////////////////////////////////////////////////////// CABEÇALHOS
 
 void menuInicial();
+void iniciaData();
 
 ///////////////////////////////////////////////////////////////// FUNÇÕES
 
@@ -22,6 +23,8 @@ int main() {
   setlocale(LC_ALL, "pt_br");
 
   SetConsoleTitle("Trabalho 2 - Eduardo Pires & Vinicius Prado");
+
+  iniciaData();
 
   menuInicial();
 
@@ -36,7 +39,7 @@ void menuInicial() {
   bool flagAjuda = false, continuaExecucao = true;
 
   do {
-    inicializacao();
+    inicializacao(dataHora);
 
     gotoxy(5, 3); printf("[ESC] Sair");
     gotoxy(20, 3); printf("[F1] Ajuda");
@@ -72,7 +75,7 @@ void menuInicial() {
         break;
       case 13: // enter
         if(pos == 11){ // configurações
-          menuInicialConfiguracao();
+          menuInicialConfiguracao(&dataHora);
         }
         if(pos == 12){ // sair
           continuaExecucao = 0;
@@ -90,4 +93,12 @@ void menuInicial() {
     }
 
   } while (continuaExecucao);
+}
+
+void iniciaData(){
+  dataHora.minuto = 0;
+  dataHora.hora = 0;
+  dataHora.dia = 0;
+  dataHora.mes = 0;
+  dataHora.ano = 0;
 }

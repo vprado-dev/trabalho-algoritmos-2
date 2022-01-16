@@ -6,13 +6,25 @@
 #include<windows.h>
 #include<wincon.h>
 
+///////////////////////////////////////////////////////////////// TIPOS
+
+struct dateTime{
+  int minuto;
+  int hora;
+  int dia;
+  int mes;
+  int ano;
+};
+
+typedef struct dateTime dateTime;
+
 ///////////////////////////////////////////////////////////////// CABEÇALHOS
 
 void gotoxy(int, int);
 
 ///////////////////////////////////////////////////////////////// FUNÇÕES
 
-void inicializacao(){
+void inicializacao(dateTime dataHora){
     system("cls");
     
     // define o tamanho da tela
@@ -20,7 +32,13 @@ void inicializacao(){
 
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", tm.tm_hour, tm.tm_min, tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+
+    if(dataHora.ano == 0){
+      gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", tm.tm_hour, tm.tm_min, tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    }
+    else{
+      gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", dataHora.hora, dataHora.minuto, dataHora.dia, dataHora.mes, dataHora.ano);
+    }
 }
 
 // 1 => exibe o cursor
