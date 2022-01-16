@@ -5,8 +5,8 @@
 #include <windows.h>
 #include <wincon.h>
 
-#include"util/util.h"
-#include"arquivos.h"
+#include "util/util.h"
+#include "arquivos.h"
 
 ///////////////////////////////////////////////////////////////// VARIÁVEIS
 

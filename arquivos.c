@@ -143,14 +143,22 @@ void listaArquivos(dateTime *dataHora){
 
   // listando os arquivos
 
-  int linhas = 10;
+  int linhas = 10, num = 1;
   while((de = readdir(dr)) != NULL){
+    gotoxy(45, linhas); printf("[%d]", num);
     gotoxy(50, linhas); printf("%s\n", de->d_name);
+    num += 1;
     linhas += 1;
+
+    if(num == 15){ // limite de quinze arquivos
+      gotoxy(50, linhas + 2); printf("Deseja gerenciar mais arquivos?");
+      gotoxy(50, linhas + 3); printf("É necessário obter a versão premium!");
+      break;
+    }
   }
 
   closedir(dr); 
-  gotoxy(50, linhas + 1); printf("Pressione qualquer tecla para continuar...");
+  gotoxy(50, linhas + 4); printf("Pressione qualquer tecla para continuar...");
   system("pause >nul");
 
   return;
