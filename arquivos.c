@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////// CABEÇALHO
 
 void alteraDataHora(dateTime *dataHora);
+void resetaDataHora(dateTime *dataHora);
 
 ///////////////////////////////////////////////////////////////// FUNÇÕES
 
@@ -26,8 +27,9 @@ void menuInicialConfiguracao(dateTime *dataHora){
     criaCabecalho(titulo);
 
     gotoxy(5, 10); printf("Gerenciar diretórios");
-    gotoxy(5, 11); printf("Data e Horário");
-    gotoxy(5, 12); printf("Voltar");
+    gotoxy(5, 11); printf("Alterar Data e Hora");
+    gotoxy(5, 12); printf("Resetar Data e Hora");
+    gotoxy(5, 13); printf("Voltar");
 
     if (flagAjuda){
       // implementar alguma coisa
@@ -42,15 +44,22 @@ void menuInicialConfiguracao(dateTime *dataHora){
     switch (input){
       case 72: // seta para cima
         pos -= 1;
-        if(pos < 10) pos = 12;
+        if(pos < 10) pos = 13;
         break;
       case 80: // seta para baixo
         pos += 1;
-        if(pos > 12) pos = 10;
+        if(pos > 13) pos = 10;
         break;
       case 13: // enter
-        if(pos == 11){
+        if(pos == 11){ // alterar data e hora
           alteraDataHora(&dataHoraLocal);
+        }
+        if(pos == 12){ // resetar data e hora
+          resetaDataHora(&dataHoraLocal);
+        }
+        if(pos == 13){ // voltar
+          continuaExecucao = 0;
+          system("cls");
         }
         break;
       case 27: // esc
@@ -78,4 +87,12 @@ void alteraDataHora(dateTime *dataHora){
   gotoxy(92, 5); scanf("%d", &((*dataHora).ano));
 
   cursor(0);
+}
+
+void resetaDataHora(dateTime *dataHora){
+  (*dataHora).minuto = 0;
+  (*dataHora).hora = 0;
+  (*dataHora).dia = 0;
+  (*dataHora).mes = 0;
+  (*dataHora).ano = 0;
 }
