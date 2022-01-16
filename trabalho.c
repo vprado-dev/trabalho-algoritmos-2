@@ -41,16 +41,16 @@ void menuInicial() {
     gotoxy(5, 11); printf("Gerenciamento de jogadores");
     gotoxy(5, 12); printf("Sair");
 
+    if (flagAjuda) {
+      gotoxy(60, 16);
+      printf("Escolha uma opção!!");
+    }
+
     gotoxy(3, pos); printf(">"); // coloca a seta na posição
 
     input = getch();
 
     gotoxy(3, pos); printf(" "); // coloca a seta na posição
-
-    if (flagAjuda) { // MELHORAR!!!!!!!
-      gotoxy(60, 16);
-      printf("Escolha uma opção!!");
-    }
 
     switch (input){
       case 72: // seta para cima
@@ -62,14 +62,20 @@ void menuInicial() {
         if(pos > 12) pos = 10;
         break;
       case 13: // enter
-        // chamar as devidas funções
+        if(pos == 12){
+          continuaExecucao = 0;
+          system("cls");
+        }
         break;
-      case ';':
+      case 27: // esc
+        continuaExecucao = 0;
+        system("cls");
+        break;
+      case ';': // F1
         flagAjuda = true;
         break;
       default: break;
     }
 
   } while (continuaExecucao);
-
 }
