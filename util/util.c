@@ -2,6 +2,7 @@
 #include<locale.h>
 #include<stdbool.h>
 #include<stdio.h>
+#include<string.h>
 #include<time.h>
 #include<windows.h>
 #include<wincon.h>
@@ -39,6 +40,19 @@ void inicializacao(dateTime dataHora){
     else{
       gotoxy(80, 3); printf("%02d:%02d %02d/%02d/%02d", dataHora.hora, dataHora.minuto, dataHora.dia, dataHora.mes, dataHora.ano);
     }
+}
+
+void criaCabecalho(char title[], int lenght){
+  gotoxy(5, 3); printf("[ESC] Sair");
+  gotoxy(20, 3); printf("[F1] Ajuda");
+
+  gotoxy(5, 5); printf("PRODUCT MANAGER");
+
+  int col = 5;
+  for(int i = 0; i < lenght; i++){
+    gotoxy(col, 6); printf("%c", title[i]);
+    col++;
+  }
 }
 
 // 1 => exibe o cursor

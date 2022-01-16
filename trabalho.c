@@ -41,11 +41,8 @@ void menuInicial() {
   do {
     inicializacao(dataHora);
 
-    gotoxy(5, 3); printf("[ESC] Sair");
-    gotoxy(20, 3); printf("[F1] Ajuda");
-
-    gotoxy(5, 5); printf("PRODUCT MANAGER");
-    gotoxy(5, 6); printf("Escolha uma das opções!");
+    char titulo[12] = "Menu Inicial";
+    criaCabecalho(titulo, 12);
 
     gotoxy(5, 10); printf("Gerenciamento de produtos");
     gotoxy(5, 11); printf("Configurações");
