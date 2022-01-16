@@ -18,6 +18,6 @@ typedef struct dateTime dateTime;
 void inicializacao();
 void cursor(int status);
 void gotoxy(int x, int y);
-void criaCabecalho(char [], int);
+void criaCabecalho(char []);
 
 #endif

@@ -41,8 +41,8 @@ void menuInicial() {
   do {
     inicializacao(dataHora);
 
-    char titulo[12] = "Menu Inicial";
-    criaCabecalho(titulo, 12);
+    char titulo[] = "Menu Inicial";
+    criaCabecalho(titulo);
 
     gotoxy(5, 10); printf("Gerenciamento de produtos");
     gotoxy(5, 11); printf("Configurações");

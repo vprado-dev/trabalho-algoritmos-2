@@ -17,11 +17,8 @@ void menuInicialConfiguracao(dateTime *dataHora){
   do{
     inicializacao((*dataHora));
 
-    gotoxy(5, 3); printf("[ESC] Voltar");
-    gotoxy(20, 3); printf("[F1] Ajuda");
-
-    gotoxy(5, 5); printf("PRODUCT MANAGER");
-    gotoxy(5, 6); printf("Configurações");
+    char titulo[] = "Configurações";
+    criaCabecalho(titulo);
 
     gotoxy(5, 10); printf("Gerenciar diretórios");
     gotoxy(5, 11); printf("Data e Horário");

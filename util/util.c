@@ -42,17 +42,12 @@ void inicializacao(dateTime dataHora){
     }
 }
 
-void criaCabecalho(char title[], int lenght){
+void criaCabecalho(char title[]){
   gotoxy(5, 3); printf("[ESC] Sair");
   gotoxy(20, 3); printf("[F1] Ajuda");
 
   gotoxy(5, 5); printf("PRODUCT MANAGER");
-
-  int col = 5;
-  for(int i = 0; i < lenght; i++){
-    gotoxy(col, 6); printf("%c", title[i]);
-    col++;
-  }
+  gotoxy(5, 6); printf("%s", title);
 }
 
 // 1 => exibe o cursor
