@@ -63,16 +63,16 @@ void menuInicialConfiguracao(dateTime *dataHora){
         if(pos > 16) pos = 10;
         break;
       case 13: // enter
-        if(pos == 10){ // gerenciar diretórios
+        if(pos == 10){ // listar arquivos
           listaArquivos(&dataHoraLocal);
         }
-        if(pos == 11){ // alterar data e hora
+        if(pos == 14){ // alterar data e hora
           alteraDataHora(&dataHoraLocal);
         }
-        if(pos == 12){ // resetar data e hora
+        if(pos == 15){ // resetar data e hora
           resetaDataHora(&dataHoraLocal);
         }
-        if(pos == 13){ // voltar
+        if(pos == 16){ // voltar
           continuaExecucao = 0;
           system("cls");
         }
