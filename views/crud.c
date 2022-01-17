@@ -58,6 +58,10 @@ void menuInicialCrud(dateTime dataHora, char *nomeArquivo){
         if(pos == 10) incluiProduto();
         if(pos == 11) listaProdutos();
         if(pos == 12) alteraProduto();
+        if(pos == 13){
+          excluiProduto();
+          setupArquivo(nomeArquivo, &fp);
+        } 
         if(pos == 15){ // voltar
           continuaExecucao = 0;
           system("cls");

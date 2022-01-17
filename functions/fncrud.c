@@ -129,27 +129,26 @@ void exclusaoFisicaProduto(char* nome, char* fileName) {
   //Percorre o arquivo procurando nome
   while (fread(&p, sizeof(Produto), 1, fp) != 0) {
     if (strcmp(nome, p.nome) == 0) {
-      //Encontrou o registro
       found = 1;
-      printf("\n\nDados atuais:\n\n");
-      exibeProduto(p);
+      gotoxy(5, 15); printf("Dados atuais:");
+      gotoxy(7, 17); exibeProduto(p);
 
       char resp;
-      printf("\n\nConfirma Exclusao (s/n)?: "); resp = getchar();
+      gotoxy(7, 20); printf("Confirma a exclusão? (S/N) "); resp = getchar();
       fflush(stdin);
 
       if (toupper(resp) != 'S') {
         return;
       }
 
-      mensagemPausa("Produto encontrado e deletado.\n");
+      gotoxy(7, 22); mensagemPausa("Produto encontrado e deletado.");
     } else {
       fwrite(&p, sizeof(Produto), 1, fp_tmp);
     }
   }
 
   if (!found) {
-    mensagemPausa("Produto nao encontrado.\n");
+    gotoxy(7, 22); mensagemPausa("Produto nao encontrado.\n");
   }
 
   fclose(fp);
@@ -157,12 +156,13 @@ void exclusaoFisicaProduto(char* nome, char* fileName) {
 
   remove(fileName);
   rename("prod_tmp.bin", fileName);
+
+  return;
 }
 
 void exclusaoLogicaProduto(char* nome) {
   Produto p;
   int found = 0;
-
   rewind(fp);
 
   //Percorre o arquivo procurando nome
@@ -170,11 +170,11 @@ void exclusaoLogicaProduto(char* nome) {
     if (strcmp(nome, p.nome) == 0) {
       //Encontrou o registro
       found = 1;
-      printf("\n\nDados atuais:\n\n");
-      exibeProduto(p);
+      gotoxy(5, 15); printf("Dados atuais:");
+      gotoxy(7, 17); exibeProduto(p);
 
       char resp;
-      printf("\n\nConfirma Exclusao (s/n)?: "); resp = getchar();
+      gotoxy(7, 20); printf("Confirma a exclusão? (S/N) "); resp = getchar();
       fflush(stdin);
 
       if (toupper(resp) != 'S') {
@@ -186,30 +186,33 @@ void exclusaoLogicaProduto(char* nome) {
       fseek(fp, -(long)sizeof(Produto), SEEK_CUR);
       fwrite(&p, sizeof(Produto), 1, fp);
       fflush(fp);
-      mensagemPausa("Produto encontrado e deletado.\n");
+      gotoxy(7, 20); mensagemPausa("Produto encontrado e deletado.");
     }
   }
 
   if (!found) {
-    mensagemPausa("Produto nao encontrado.\n");
+    gotoxy(7, 20); mensagemPausa("Produto não encontrado.");
   }
+
+  return;
 }
 
 void excluiProduto(char* fileName) {
   char produtoPesquisa[50];
   char resp;
 
-  printf("Qual o nome do produto: ");
+  system("cls");
+  char titulo[] = "Exclusão de Produtos";
+  criaCabecalho(titulo);
+
+  gotoxy(5, 10); printf("Qual o nome do produto: ");
   gets(produtoPesquisa); fflush(stdin);
 
-  printf("\n\nExclusao Fisica (s/n)?: "); resp = getchar();
+  gotoxy(5, 12); printf("Exclusão Física (s/n)?: "); resp = getchar();
   fflush(stdin);
 
-  if (toupper(resp) != 'S') {
-    exclusaoLogicaProduto(produtoPesquisa);
-  } else {
-    exclusaoFisicaProduto(produtoPesquisa, fileName);
-  }
+  if (toupper(resp) != 'S') exclusaoLogicaProduto(produtoPesquisa);
+  else exclusaoFisicaProduto(produtoPesquisa, fileName);
 
 }
 
