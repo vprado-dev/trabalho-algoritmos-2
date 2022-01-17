@@ -149,6 +149,7 @@ void exclusaoFisicaProduto(char* nome, char* fileName) {
 
   if (!found) {
     gotoxy(7, 22); mensagemPausa("Produto nao encontrado.\n");
+    return;
   }
 
   fclose(fp);
@@ -192,6 +193,7 @@ void exclusaoLogicaProduto(char* nome) {
 
   if (!found) {
     gotoxy(7, 20); mensagemPausa("Produto não encontrado.");
+    return;
   }
 
   return;
@@ -225,7 +227,7 @@ void pesquisaProdutoCodigo(char* codBarras) {
     }
   }
 
-  mensagemPausa("\n\n Pressione <Enter> para continuar .  .  .");
+  gotoxy(5, 29); mensagemPausa("Pressione <Enter> para continuar...");
 }
 
 void pesquisaProdutoPreco(double preco) {
@@ -238,26 +240,31 @@ void pesquisaProdutoPreco(double preco) {
     }
   }
 
-  mensagemPausa("\n\n Pressione <Enter> para continuar .  .  .");
+  gotoxy(5, 29); mensagemPausa("\n\n Pressione <Enter> para continuar .  .  .");
 }
 
 void pesquisaProduto() {
   int op = 0;
-  printf("Pelo que deseja pesquisar?\n1 - Codigo de Barras\n2 - Preco\n");
-  scanf("%d", &op);fflush(stdin);
+  gotoxy(5, 10); printf("Pelo que deseja pesquisar?");
+  gotoxy(7, 11); printf("1 - Código de Barras");
+  gotoxy(7, 12); printf("2 - Preço");
+  scanf("%d", &op); fflush(stdin);
 
-  if (op != 1 && op != 2) {
+  if (op != 1 && op != 2){
     return;
-  } else if (op == 1) {
+  } 
+  else if (op == 1) {
     char codBarras[50];
-    printf("Qual o codigo de barras do produto a procurar: ");
+    gotoxy(7, 12); printf("Qual o código de barras do produto a procurar: ");
     gets(codBarras); fflush(stdin);
-
     pesquisaProdutoCodigo(codBarras);
-  } else if (op == 2) {
+  } 
+  else if (op == 2) {
     double preco;
-    printf("Qual o preco do produto a procurar: ");
+    gotoxy(7, 12); printf("Qual o preço do produto a procurar: ");
     scanf("%lf", &preco); fflush(stdin);
     pesquisaProdutoPreco(preco);
   }
+
+  return;
 }

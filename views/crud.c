@@ -61,7 +61,8 @@ void menuInicialCrud(dateTime dataHora, char *nomeArquivo){
         if(pos == 13){
           excluiProduto();
           setupArquivo(nomeArquivo, &fp);
-        } 
+        }
+        if(pos == 14) pesquisaProduto();
         if(pos == 15){ // voltar
           continuaExecucao = 0;
           system("cls");
@@ -78,13 +79,4 @@ void menuInicialCrud(dateTime dataHora, char *nomeArquivo){
     }
 
   } while (continuaExecucao);
-
-  // //Altera produto
-  // alteraProduto();
-
-  // // Exclui Produto
-  // excluiProduto(fileName);
-  // setupArquivo(fileName, &fp);//Tem que chamar essa funcao depois da exclusao
-
-  // pesquisaProduto();
 }
