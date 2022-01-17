@@ -18,16 +18,16 @@ typedef struct {
   bool excluido;
 }Produto;
 
-void leProduto(Produto* p) {
-  system("cls");
+void leProduto(Produto* p, int linhaInicio) {
+  if(linhaInicio == 10){
+    char titulo[] = "Cadastro de Produtos";
+    criaCabecalho(titulo);
+  }
 
-  char titulo[] = "Cadastro de Produtos";
-  criaCabecalho(titulo);
-
-  gotoxy(5, 10); printf("Codigo de barras: "); gets(p->codigo_barras);
-  gotoxy(5, 11); printf("Nome: ");             gets(p->nome);
-  gotoxy(5, 12); printf("Quantidade: ");       scanf("%d", &p->quantidade);
-  gotoxy(5, 13); printf("Preco: ");            scanf("%lf", &p->preco); 
+  gotoxy(5, linhaInicio); printf("Codigo de barras: "); gets(p->codigo_barras);
+  gotoxy(5, linhaInicio + 1); printf("Nome: ");             gets(p->nome);
+  gotoxy(5, linhaInicio + 2); printf("Quantidade: ");       scanf("%d", &p->quantidade);
+  gotoxy(5, linhaInicio + 3); printf("Preco: ");            scanf("%lf", &p->preco); 
 
   p->excluido = false;
 
@@ -43,7 +43,8 @@ void inserirProduto(Produto p) {
 
 void incluiProduto() {
   Produto prod;
-  leProduto(&prod);
+  system("cls");
+  leProduto(&prod, 10);
   inserirProduto(prod);
 }
 
@@ -92,24 +93,28 @@ void listaProdutos() {
 void alteraProduto() {
   Produto p;
   char nomeProduto[50];
-  printf("Qual o nome do produto: ");
+  
+  system("cls");
+  char titulo[] = "Listagem de Produtos";
+  criaCabecalho(titulo);
+  
+  gotoxy(5, 8); printf("Nome do produto: ");
+  
   gets(nomeProduto); fflush(stdin);
-
   rewind(fp);
 
   while (fread(&p, sizeof(Produto), 1, fp) != 0) {
     if (strcmp(nomeProduto, p.nome) == 0) {
-      printf("\n\n Dados Atuais:\n\n");
-      exibeProduto(p);
-      printf("\n\n Novos dados \n\n");
-      leProduto(&p);
+      gotoxy(5, 10); printf("DADOS ATUAIS");
+      gotoxy(7, 12); exibeProduto(p);
+      gotoxy(5, 15); printf("NOVOS DADOS");
+      leProduto(&p, 17);
 
       fseek(fp, -(long)sizeof(Produto), SEEK_CUR);
       fwrite(&p, sizeof(Produto), 1, fp);
       fflush(fp);
     }
   }
-
 }
 
 void exclusaoFisicaProduto(char* nome, char* fileName) {

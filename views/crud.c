@@ -57,6 +57,7 @@ void menuInicialCrud(dateTime dataHora, char *nomeArquivo){
       case 13: // enter
         if(pos == 10) incluiProduto();
         if(pos == 11) listaProdutos();
+        if(pos == 12) alteraProduto();
         if(pos == 15){ // voltar
           continuaExecucao = 0;
           system("cls");
