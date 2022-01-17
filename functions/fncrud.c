@@ -60,7 +60,7 @@ void setupArquivo(char* nomeArq, FILE** file) {
 }
 
 void exibeProduto(Produto p) {
-  printf("Cod. de Barras: %s // Nome: %s // Qtd.: %d // Preco: %.2f reais\n", p.codigo_barras, p.nome, p.quantidade, p.preco);
+  printf("Código de Barras: %s | Nome: %s | Quantidade: %d | Preco: %.2f reais\n", p.codigo_barras, p.nome, p.quantidade, p.preco);
 }
 
 void listaProdutos() {
@@ -68,16 +68,25 @@ void listaProdutos() {
   Produto reg;
   rewind(fp);
 
+  system("cls");
+
+  char titulo[] = "Listagem de Produtos";
+  criaCabecalho(titulo);
+
   while (1) {
-    if (fread(&reg, sizeof(reg), 1, fp) != 1)break;
+    if (fread(&reg, sizeof(reg), 1, fp) != 1) break;
     if (reg.excluido == 1) continue;
+
+    gotoxy(5, n_Linhas + 10);
     exibeProduto(reg);
     n_Linhas++;
+
     if (n_Linhas % 20 == 0) {
+      n_Linhas = 0;
       mensagemPausa("Pressione <Enter> para continuar .  .  .");
     }
   }
-  mensagemPausa("\n\nPressione <Enter> para continuar .  .  .");
+  gotoxy(5, n_Linhas + 12); mensagemPausa("Pressione <Enter> para continuar .  .  .");
 }
 
 void alteraProduto() {
