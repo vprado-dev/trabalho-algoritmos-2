@@ -16,11 +16,17 @@ void menuInicialCrud(dateTime dataHora, char *nomeArquivo){
   unsigned char input;
   bool flagAjuda = false, continuaExecucao = true;
 
+  //Chamar depois que ja tiver alterado a variavel fileName
+  setupArquivo(nomeArquivo, &fp);
+
   do{
     inicializacao(dataHora);
 
     char titulo[] = "Gerenciamento de Produtos";
     criaCabecalho(titulo);
+
+    // printando removendo o "files/"
+    gotoxy(5, 8); printf("Arquivo: %s", nomeArquivo + 6);
 
     gotoxy(5, 10); printf("Cadastrar novo produto");
     gotoxy(5, 11); printf("Listar Produtos");
@@ -49,6 +55,11 @@ void menuInicialCrud(dateTime dataHora, char *nomeArquivo){
         if (pos > 15) pos = 10;
         break;
       case 13: // enter
+        if(pos == 10){
+          // Insere produto
+          incluiProduto();
+          break;
+        }
         if(pos == 15){ // voltar
           continuaExecucao = 0;
           system("cls");
@@ -65,12 +76,6 @@ void menuInicialCrud(dateTime dataHora, char *nomeArquivo){
     }
 
   } while (continuaExecucao);
-
-  // //Chamar depois que ja tiver alterado a variavel fileName
-  // setupArquivo(nomeArquivo, &fp);
-
-  // // Insere produto
-  // incluiProduto();
 
   // // Lista produtos - TODOS
   // listaProdutos();

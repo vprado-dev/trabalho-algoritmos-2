@@ -1,13 +1,14 @@
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+#include <windows.h>
 
 #include "../util/util.h"
 
-FILE* fp; //produtos
-FILE* fp_tmp; //file temporario para exclusao fisica
+FILE* fp;
+FILE* fp_tmp;
 
 typedef struct {
   char codigo_barras[100];
@@ -18,11 +19,18 @@ typedef struct {
 }Produto;
 
 void leProduto(Produto* p) {
-  printf("Codigo de barras: ");gets(p->codigo_barras);
-  printf("Nome: ");gets(p->nome);
-  printf("Quantidade: ");scanf("%d", &p->quantidade);
-  printf("Preco: "); scanf("%lf", &p->preco);
+  system("cls");
+
+  char titulo[] = "Cadastro de Produtos";
+  criaCabecalho(titulo);
+
+  gotoxy(5, 10); printf("Codigo de barras: "); gets(p->codigo_barras);
+  gotoxy(5, 11); printf("Nome: ");             gets(p->nome);
+  gotoxy(5, 12); printf("Quantidade: ");       scanf("%d", &p->quantidade);
+  gotoxy(5, 13); printf("Preco: ");            scanf("%lf", &p->preco); 
+
   p->excluido = false;
+
   fflush(stdin);
 }
 
