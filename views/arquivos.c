@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <windows.h>
 
@@ -18,6 +19,7 @@ void alteraDataHora(dateTime *dataHora);
 void resetaDataHora(dateTime *dataHora);
 void listaArquivos(dateTime *dataHora);
 bool verificaFiles();
+void renomeiaArquivo();
 
 ///////////////////////////////////////////////////////////////// FUNÇÕES
 
@@ -65,6 +67,9 @@ void menuInicialConfiguracao(dateTime *dataHora){
       case 13: // enter
         if(pos == 10){ // listar arquivos
           listaArquivos(&dataHoraLocal);
+        }
+        if(pos == 11){
+          renomeiaArquivo();
         }
         if(pos == 14){ // alterar data e hora
           alteraDataHora(&dataHoraLocal);
@@ -165,6 +170,27 @@ void listaArquivos(dateTime *dataHora){
   system("pause >nul");
 
   return;
+}
+
+void renomeiaArquivo(){
+  char nomeArquivo[50];
+  gotoxy(40, 20); printf("Insira o nome do arquivo a ser alterado (com extensão): ");
+  gets(nomeArquivo); fflush(stdin);
+  strcat("files/", nomeArquivo);
+
+  char nomeArquivoAtualizado[50];
+  gotoxy(40, 22); printf("Insira o novo nome do arquivo (com extensão): ");
+  gets(nomeArquivoAtualizado); fflush(stdin); 
+  strcat("files/", nomeArquivoAtualizado);
+
+  int result = rename(nomeArquivo, nomeArquivoAtualizado);
+
+  if (result == 0) {
+    gotoxy(40, 25); printf("O arquivo foi alterado com sucesso.");
+  }
+  else {
+    gotoxy(40, 25); printf("Falha na alteração do arquivo...");
+  }
 }
 
 bool verificaFiles(){
