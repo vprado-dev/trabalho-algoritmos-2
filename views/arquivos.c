@@ -20,6 +20,7 @@ void resetaDataHora(dateTime* dataHora);
 void listaArquivos(dateTime* dataHora);
 bool verificaFiles();
 void renomeiaArquivo();
+void deletaArquivo();
 
 ///////////////////////////////////////////////////////////////// FUNÇÕES
 
@@ -71,6 +72,9 @@ void menuInicialConfiguracao(dateTime* dataHora) {
       if (pos == 11) {
         renomeiaArquivo();
       }
+      if (pos == 12) {
+        deletaArquivo();
+      }
       if (pos == 14) { // alterar data e hora
         alteraDataHora(&dataHoraLocal);
       }
@@ -118,11 +122,14 @@ void resetaDataHora(dateTime* dataHora) {
 }
 
 void listaArquivos(dateTime* dataHora) {
-  if (!verificaFiles())
+  if (!verificaFiles()) {
     system("mkdir files");
+  }
 
-  struct dirent* de;
-  DIR* dr = opendir("./files");
+  DIR* dr = opendir("files/");
+
+  struct dirent* dir;
+
 
   // verificando se não houve nenhum erro
   if (dr == NULL)
@@ -131,30 +138,16 @@ void listaArquivos(dateTime* dataHora) {
     return;
   }
 
-  // verificando se existem arquivos na pasta
-
-  bool possuiArquivos = false;
-
-  while ((de = readdir(dr)) != NULL) {
-    if (strcmp(de->d_name, ".") != 0 && strcmp(de->d_name, "..")) {
-      possuiArquivos = true;
-      break;
-    }
-  }
-
-  if (!possuiArquivos) {
-    gotoxy(50, 10); printf("Não existem arquivos válidos a serem exibidos!");
-    gotoxy(50, 11); printf("Pressione qualquer tecla para continuar...");
-    system("pause >nul");
-    return;
-  }
-
   // listando os arquivos
 
   int linhas = 10, num = 1;
-  while ((de = readdir(dr)) != NULL) {
+  while ((dir = readdir(dr)) != NULL) {
+    if (!strcmp(dir->d_name, ".") || !(strcmp(dir->d_name, ".."))) {
+      continue;
+    }
+
     gotoxy(45, linhas); printf("[%d]", num);
-    gotoxy(50, linhas); printf("%s\n", de->d_name);
+    gotoxy(50, linhas); printf("%s\n", dir->d_name);
     num += 1;
     linhas += 1;
 
@@ -193,6 +186,21 @@ void renomeiaArquivo() {
     gotoxy(40, 25); mensagemPausa("O arquivo foi alterado com sucesso.");
   } else {
     gotoxy(40, 25); mensagemPausa("Falha na alteração do arquivo...");
+  }
+}
+
+void deletaArquivo() {
+  char dir[50] = "files/";
+  char nomeArquivo[50];
+  gotoxy(40, 20); printf("Insira o nome do arquivo a ser deletado (com extensão): ");
+  gets(nomeArquivo); fflush(stdin);
+
+  strcat(dir, nomeArquivo);
+
+  if (remove(dir) == 0) {
+    gotoxy(40, 25); mensagemPausa("Arquivo deletado com sucesso.");
+  } else {
+    gotoxy(40, 25); mensagemPausa("Falha ao deletar arquivo.");
   }
 }
 
