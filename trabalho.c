@@ -17,6 +17,8 @@ void menuInicial();
 void iniciaData();
 
 int main() {
+  system("mkdir files");
+
   setlocale(LC_ALL, "pt_br");
 
   SetConsoleTitle("Trabalho 2 - Eduardo Pires & Vinicius Prado");
@@ -75,7 +77,7 @@ void menuInicial() {
       if (pos > 12) pos = 10;
       break;
     case 13: // enter
-      if(pos == 10){
+      if (pos == 10) {
         menuInicialCrud(dataHora, fileName);
       }
       if (pos == 11) { // configurações

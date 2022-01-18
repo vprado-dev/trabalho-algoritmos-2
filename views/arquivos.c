@@ -11,19 +11,19 @@
 
 ///////////////////////////////////////////////////////////////// CONSTANTES
 
-const char *name = "files";
+const char* name = "files";
 
 ///////////////////////////////////////////////////////////////// CABEÇALHO
 
-void alteraDataHora(dateTime *dataHora);
-void resetaDataHora(dateTime *dataHora);
-void listaArquivos(dateTime *dataHora);
+void alteraDataHora(dateTime* dataHora);
+void resetaDataHora(dateTime* dataHora);
+void listaArquivos(dateTime* dataHora);
 bool verificaFiles();
 void renomeiaArquivo();
 
 ///////////////////////////////////////////////////////////////// FUNÇÕES
 
-void menuInicialConfiguracao(dateTime *dataHora){
+void menuInicialConfiguracao(dateTime* dataHora) {
   cursor(0); // esconde o cursor
 
   dateTime dataHoraLocal = (*dataHora);
@@ -31,7 +31,7 @@ void menuInicialConfiguracao(dateTime *dataHora){
   unsigned char input;
   bool flagAjuda = false, continuaExecucao = true;
 
-  do{
+  do {
     inicializacao(dataHoraLocal);
 
     char titulo[] = "Configurações";
@@ -45,7 +45,7 @@ void menuInicialConfiguracao(dateTime *dataHora){
     gotoxy(5, 15); printf("Resetar Data e Hora");
     gotoxy(5, 16); printf("Voltar");
 
-    if (flagAjuda){
+    if (flagAjuda) {
       // implementar alguma coisa
     }
 
@@ -55,46 +55,46 @@ void menuInicialConfiguracao(dateTime *dataHora){
 
     gotoxy(3, pos); printf(" "); // coloca a seta na posição
 
-    switch (input){
-      case 72: // seta para cima
-        pos -= 1;
-        if(pos < 10) pos = 16;
-        break;
-      case 80: // seta para baixo
-        pos += 1;
-        if(pos > 16) pos = 10;
-        break;
-      case 13: // enter
-        if(pos == 10){ // listar arquivos
-          listaArquivos(&dataHoraLocal);
-        }
-        if(pos == 11){
-          renomeiaArquivo();
-        }
-        if(pos == 14){ // alterar data e hora
-          alteraDataHora(&dataHoraLocal);
-        }
-        if(pos == 15){ // resetar data e hora
-          resetaDataHora(&dataHoraLocal);
-        }
-        if(pos == 16){ // voltar
-          continuaExecucao = 0;
-          system("cls");
-        }
-        break;
-      case 27: // esc
+    switch (input) {
+    case 72: // seta para cima
+      pos -= 1;
+      if (pos < 10) pos = 16;
+      break;
+    case 80: // seta para baixo
+      pos += 1;
+      if (pos > 16) pos = 10;
+      break;
+    case 13: // enter
+      if (pos == 10) { // listar arquivos
+        listaArquivos(&dataHoraLocal);
+      }
+      if (pos == 11) {
+        renomeiaArquivo();
+      }
+      if (pos == 14) { // alterar data e hora
+        alteraDataHora(&dataHoraLocal);
+      }
+      if (pos == 15) { // resetar data e hora
+        resetaDataHora(&dataHoraLocal);
+      }
+      if (pos == 16) { // voltar
         continuaExecucao = 0;
         system("cls");
-        break;
-      default: break;
+      }
+      break;
+    case 27: // esc
+      continuaExecucao = 0;
+      system("cls");
+      break;
+    default: break;
     }
 
-  }while(continuaExecucao);
+  } while (continuaExecucao);
 
   (*dataHora) = dataHoraLocal;
 }
 
-void alteraDataHora(dateTime *dataHora){
+void alteraDataHora(dateTime* dataHora) {
   cursor(1);
 
   gotoxy(60, 10); printf("É necessário apertar [Enter] em cada campo");
@@ -109,7 +109,7 @@ void alteraDataHora(dateTime *dataHora){
   cursor(0);
 }
 
-void resetaDataHora(dateTime *dataHora){
+void resetaDataHora(dateTime* dataHora) {
   (*dataHora).minuto = 0;
   (*dataHora).hora = 0;
   (*dataHora).dia = 0;
@@ -117,32 +117,32 @@ void resetaDataHora(dateTime *dataHora){
   (*dataHora).ano = 0;
 }
 
-void listaArquivos(dateTime *dataHora){
-  if(!verificaFiles())
+void listaArquivos(dateTime* dataHora) {
+  if (!verificaFiles())
     system("mkdir files");
 
-  struct dirent *de;
-  DIR *dr = opendir("./files");
+  struct dirent* de;
+  DIR* dr = opendir("./files");
 
   // verificando se não houve nenhum erro
-  if (dr == NULL) 
+  if (dr == NULL)
   {
-      printf("Houve um erro no programa!");
-      return;
+    printf("Houve um erro no programa!");
+    return;
   }
 
   // verificando se existem arquivos na pasta
 
   bool possuiArquivos = false;
 
-  while ((de = readdir(dr)) != NULL){
-    if(strcmp(de->d_name, ".") != 0 && strcmp(de->d_name, "..")){
+  while ((de = readdir(dr)) != NULL) {
+    if (strcmp(de->d_name, ".") != 0 && strcmp(de->d_name, "..")) {
       possuiArquivos = true;
       break;
     }
   }
 
-  if(!possuiArquivos){
+  if (!possuiArquivos) {
     gotoxy(50, 10); printf("Não existem arquivos válidos a serem exibidos!");
     gotoxy(50, 11); printf("Pressione qualquer tecla para continuar...");
     system("pause >nul");
@@ -152,53 +152,56 @@ void listaArquivos(dateTime *dataHora){
   // listando os arquivos
 
   int linhas = 10, num = 1;
-  while((de = readdir(dr)) != NULL){
+  while ((de = readdir(dr)) != NULL) {
     gotoxy(45, linhas); printf("[%d]", num);
     gotoxy(50, linhas); printf("%s\n", de->d_name);
     num += 1;
     linhas += 1;
 
-    if(num == 15){ // limite de quinze arquivos
+    if (num == 15) { // limite de quinze arquivos
       gotoxy(50, linhas + 2); printf("Deseja gerenciar mais arquivos?");
       gotoxy(50, linhas + 3); printf("É necessário obter a versão premium!");
       break;
     }
   }
 
-  closedir(dr); 
+  closedir(dr);
   gotoxy(50, linhas + 4); printf("Pressione qualquer tecla para continuar...");
   system("pause >nul");
 
   return;
 }
 
-void renomeiaArquivo(){
+void renomeiaArquivo() {
+  char nome1[50] = "files/";
+  char nome2[50] = "files/";
   char nomeArquivo[50];
   gotoxy(40, 20); printf("Insira o nome do arquivo a ser alterado (com extensão): ");
   gets(nomeArquivo); fflush(stdin);
-  strcat("files/", nomeArquivo);
 
   char nomeArquivoAtualizado[50];
   gotoxy(40, 22); printf("Insira o novo nome do arquivo (com extensão): ");
-  gets(nomeArquivoAtualizado); fflush(stdin); 
-  strcat("files/", nomeArquivoAtualizado);
+  gets(nomeArquivoAtualizado); fflush(stdin);
 
-  int result = rename(nomeArquivo, nomeArquivoAtualizado);
+  strcat(nome1, nomeArquivo);
+
+  strcat(nome2, nomeArquivoAtualizado);
+
+  int result = rename(nome1, nome2);
 
   if (result == 0) {
-    gotoxy(40, 25); printf("O arquivo foi alterado com sucesso.");
-  }
-  else {
-    gotoxy(40, 25); printf("Falha na alteração do arquivo...");
+    gotoxy(40, 25); mensagemPausa("O arquivo foi alterado com sucesso.");
+  } else {
+    gotoxy(40, 25); mensagemPausa("Falha na alteração do arquivo...");
   }
 }
 
-bool verificaFiles(){
-  struct dirent *de;
-  DIR *dr = opendir(".");
+bool verificaFiles() {
+  struct dirent* de;
+  DIR* dr = opendir(".");
 
-  while ((de = readdir(dr)) != NULL){
-    if(strcmp(de->d_name, "files") == 0){
+  while ((de = readdir(dr)) != NULL) {
+    if (strcmp(de->d_name, "files") == 0) {
       return true;
     }
   }
